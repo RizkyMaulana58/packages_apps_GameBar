@@ -1,31 +1,48 @@
+# init.gamebar.rc
 # GameBar init script
-# NOTE: Customize these paths for your device's hardware
+# Adjust only if you find different numbers later
 
 on boot
-    # FPS measurement path (adjust paths)
+    # FPS measurement path
     chown system graphics /sys/class/drm/sde-crtc-0/measured_fps
     chmod 0660 /sys/class/drm/sde-crtc-0/measured_fps
 
-    # Battery temperature path (adjust paths)
+    # Battery temperature
     chown system system /sys/class/power_supply/battery/temp
     chmod 0660 /sys/class/power_supply/battery/temp
-    
-    # CPU temperature path (adjust thermal zone number)
-    chown system system /sys/class/thermal/thermal_zone48/temp
-    chmod 0660 /sys/class/thermal/thermal_zone48/temp
-    
-    # GPU paths (adjust paths)
+
+    # CPU cluster summary temps (use cpuss summary zones)
+    # cpuss-0-usr -> /sys/class/thermal/thermal_zone34/temp
+    chown system system /sys/class/thermal/thermal_zone34/temp
+    chmod 0660 /sys/class/thermal/thermal_zone34/temp
+
+    # cpuss-1-usr -> /sys/class/thermal/thermal_zone35/temp
+    chown system system /sys/class/thermal/thermal_zone35/temp
+    chmod 0660 /sys/class/thermal/thermal_zone35/temp
+
+    # cpu-0-0-usr -> thermal_zone28
+    chown system system /sys/class/thermal/thermal_zone28/temp
+    chmod 0660 /sys/class/thermal/thermal_zone28/temp
+
+    # GPU sysfs nodes (kgsl)
     chown system system /sys/class/kgsl/kgsl-3d0/gpu_busy_percentage
     chmod 0660 /sys/class/kgsl/kgsl-3d0/gpu_busy_percentage
+
     chown system system /sys/class/kgsl/kgsl-3d0/gpuclk
     chmod 0660 /sys/class/kgsl/kgsl-3d0/gpuclk
+
     chown system system /sys/class/kgsl/kgsl-3d0/temp
     chmod 0660 /sys/class/kgsl/kgsl-3d0/temp
-    
-    # RAM frequency path (adjust paths)
-    chown system system /sys/devices/system/cpu/bus_dcvs/DDR/cur_freq
-    chmod 0660 /sys/devices/system/cpu/bus_dcvs/DDR/cur_freq
-    
-    # RAM temperature path (adjust thermal zone number)
-    chown system system /sys/class/thermal/thermal_zone27/temp
-    chmod 0660 /sys/class/thermal/thermal_zone27/temp
+
+    chown system system /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies
+    chmod 0644 /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies
+
+    # RAM thermal zone
+    chown system system /sys/class/thermal/thermal_zone45/temp
+    chmod 0660 /sys/class/thermal/thermal_zone45/temp
+
+    # DDR frequency
+    # Keep a placeholder path 
+     chown system system /sys/class/devfreq/soc:qcom,cpu-cpu-ddr-bw/cur_freq
+     chmod 0660 /sys/class/devfreq/soc:qcom,cpu-cpu-ddr-bw/cur_freq
+
